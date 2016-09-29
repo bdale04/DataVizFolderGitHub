@@ -1,0 +1,72 @@
+---
+title: "Diamonds Exploration (9/28)"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Reading Data
+
+```{r}
+mydiamonds=read.csv("diamonds.csv")
+```
+
+# Dimension and names of variables
+
+```{r}
+dim(mydiamonds)
+nrow(mydiamonds)
+ncol(mydiamonds)
+```
+
+There are `r nrow(mydiamonds)` rows in our dataset. 
+
+```{r}
+colnames(mydiamonds)
+mydiamonds=mydiamonds[,2:11]
+```
+
+After knocking off the first column, I am now left with `r ncol(mydiamonds)` columns.
+
+# saving my truncated file
+
+```{r}
+save(mydiamonds,file="mydiamondsset2.rda")
+```
+
+# data structure
+
+```{r}
+str(mydiamonds)
+```
+
+```{r}
+summary(mydiamonds$depth)
+```
+
+Number of levels of a factor variable
+
+```{r}
+nlevels(mydiamonds$clarity)
+nlevels(mydiamonds[,c("clarity","cut")])
+```
+
+```{r}
+fairdiamonds=mydiamonds[mydiamonds$cut=="Fair",]
+```
+
+```{r}
+levels(fairdiamonds$cut)
+summary(fairdiamonds$cut)
+```
+
+# refactoring after a subset of factor variable
+  -after making "fairdiamonds" only fair cut, r just thinks the other four levels are blank and have 0 observations. I need to remove the other levels
+  
+  
+```{r}
+fairdiamonds$cut=factor(fairdiamonds$cut)
+summary(fairdiamonds$cut)
+```
